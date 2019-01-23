@@ -44,11 +44,10 @@ class App extends Component {
   }
 
   //Add Todo
-  addTodo = (newTodo) => {
+  addTodo = (title) => {
     console.log('inside addTodo from app.js');
-
-    axios.post('http://localhost:3001/todos/',newTodo).then((res) => {
-      res.send(res.data);
+    
+    axios.post('http://localhost:3001/todos/',{title}).then((res) => {
       console.log(res.data);
       //using the spread operator, where it spreads each element and places it in the array.
       this.setState({todos: [...this.state.todos,res.data]});
@@ -84,7 +83,7 @@ class App extends Component {
           <Route exact path="/" render = {(props) => (
             <React.Fragment>
               <Header/>
-              <AddTodo addtodo={this.addTodo}/>
+              <AddTodo addTodo={this.addTodo}/>
               <Todos todos={this.state.todos} toggleCompleted={this.toggleCompleted} delTodo={this.delTodo} editTodo={this.editTodo} />
             </React.Fragment>
              )}>

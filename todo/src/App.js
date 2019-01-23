@@ -13,22 +13,27 @@ import Completed from './components/pages/Completed';
 
 class App extends Component {
   state = {
-    todos : [],
-    editing: false
+    todos : []
   };
 
   
   //toggle
   toggleCompleted = (id) => {
     console.log(this.state.todos)
-      this.state.todos.map((todo) => {
-        
+      this.setState({todos: this.state.todos.map((todo) => {
+        let prevTodo = todo;
+
         if(todo._id === id){
           todo.completed = !todo.completed;
+
+          //updating the same to the db
+          axios.put(`http://localhost:3001/todos/${id}`,{completed : todo.completed}).then((res) => {
+          console.log(Object.assign(res.data,prevTodo));
+          })
         }
         return todo;
-        
-      })
+         
+      }) });  
   };
 
   //Show Pending Todos
@@ -49,13 +54,6 @@ class App extends Component {
       this.setState({todos: [...this.state.todos,res.data]});
     })
   };
-
-  //Editing and submit edited todo
-
-
-
-  
-
 
 
   //Delete Todo

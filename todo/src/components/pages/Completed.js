@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import Todos from '../Todos';
+import TodoItem from '../TodoItem';
 
 
 class Completed extends Component{
@@ -10,28 +11,30 @@ class Completed extends Component{
     }
 
     completed(){
-        //pending todos
-        axios.get('http://localhost:3001/todos').then((res) =>{
+        axios.get('http://localhost:3001/todos').then((res) => {
             let todos = res.data;
-            console.log(todos);
-           // this.setState({pendingTodos: })
+            let array = [];
             todos.forEach((todo) => {
-            if(todo.completed){
-                console.log(todo);
-                this.setState({completedTodos : [...this.state.completedTodos,todo]})
-    
-            }
-            })
+                if(todo.completed){
+                    array.push(todo);
+                }
+            });
+            this.setState({completedTodos: array});
         })
-    };
+
+    }
+    
 
     render(){
         return (
-            <header style={headerStyle}>
-                <h1>TodoList</h1>
-                <h2>Completed Todos</h2>
-                
-            </header>
+            <div>
+                <header style={headerStyle}>
+                    <h1>TodoList</h1>
+                    <h2 onClick={this.completed.bind(this)}>Completed Todos</h2>
+                </header>
+
+            </div>
+            
             
         )
     }

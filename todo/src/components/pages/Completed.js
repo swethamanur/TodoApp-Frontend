@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
+import Todos from '../Todos';
+
 
 class Completed extends Component{
     state= {
         completedTodos :[]
     }
 
-    componentDidMount(){
+    completed(){
         //pending todos
         axios.get('http://localhost:3001/todos').then((res) =>{
             let todos = res.data;
